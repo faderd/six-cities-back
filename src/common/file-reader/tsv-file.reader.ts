@@ -1,9 +1,9 @@
 import { readFileSync } from 'fs';
-import { OfferGood } from '../../types/offer-good.enum';
-import { Offer } from '../../types/offer.type';
+import { OfferGood } from '../../types/offer-good.enum.js';
+import { Offer } from '../../types/offer.type.js';
 import { TypeOfHousing } from '../../types/type-of-housing.enum.js';
 import { UserType } from '../../types/user-type.enum.js';
-import { FileReaderInterface } from './file-reader.interface';
+import { FileReaderInterface } from './file-reader.interface.js';
 
 export default class TSVFileReader implements FileReaderInterface {
   private rawData = '';
