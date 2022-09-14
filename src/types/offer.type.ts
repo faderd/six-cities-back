@@ -19,7 +19,7 @@ export type Offer = {
   price: number;
   goods: OfferGood[];
   user: User;
-  comments: number;
+  commentsCount: number;
   location: Location;
 }
 
