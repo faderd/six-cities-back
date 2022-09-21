@@ -25,7 +25,7 @@ export const createOffer = (row: string) => {
     price: Number.parseInt(price, 10),
     goods: goods.split(';')
       .map((goodsName) => (OfferGood[stringToPascalCase(goodsName) as 'Breakfast' | 'AirConditioning' | 'LaptopFriendlyWorkspace' | 'BabySeat' | 'Washer' | 'Towels' | 'Fridge'])),
-    user: { name, email, avatar, password, type: UserType[userType as 'Pro' | 'NotPro'] },
+    user: { name, email, avatarPath: avatar, password, userType: UserType[userType as 'Pro' | 'NotPro'] },
     commentsCount: Number.parseInt(commentsCount, 10),
     location: { latitude: Number.parseFloat(latitude), longitude: Number.parseFloat(longitude) },
   } as Offer;
