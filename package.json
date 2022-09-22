@@ -38,6 +38,7 @@
     "npm": "^8.1.0"
   },
   "dependencies": {
+    "@typegoose/typegoose": "^9.12.0",
     "chalk": "5.0.1",
     "convict": "6.2.3",
     "convict-format-with-validator": "6.2.0",

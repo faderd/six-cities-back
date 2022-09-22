@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { CITIES } from '../../const.js';
+import { CITIES, MAX_ADULTS, MAX_ROOMS, PriceRange, RatingRange } from '../../const.js';
 import { MockData } from '../../types/mock-data.type.js';
 import { OfferGood } from '../../types/offer-good.enum.js';
 import { TypeOfHousing } from '../../types/type-of-housing.enum.js';
@@ -7,17 +7,6 @@ import { UserType } from '../../types/user-type.enum.js';
 import { generateRandomValue, getRandomItem, getRandomItems } from '../../utils/random.js';
 import { OfferGeneratorInterface } from './offer-generator.interface.js';
 
-const PriceRange = {
-  MIN: 100,
-  MAX: 100000,
-};
-const RatingRange = {
-  MIN: 1,
-  MAX: 5,
-  NUM_AFTER_DIGIT: 1,
-};
-const MAX_ADULTS = 10;
-const MAX_ROOMS = 8;
 const LOCATION_DEVIATION = 0.001;
 const LOCATION_NUM_AFTER_DIGIT = 6;
 const MAX_COMMENTS = 10;

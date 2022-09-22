@@ -39,3 +39,23 @@ export const CITIES: City[] = [
     }
   },
 ];
+
+export const PriceRange = {
+  MIN: 100,
+  MAX: 100000,
+};
+export const RatingRange = {
+  MIN: 1,
+  MAX: 5,
+  NUM_AFTER_DIGIT: 1,
+};
+export const MAX_ADULTS = 10;
+export const MAX_ROOMS = 8;
+export const OfferTitleLengthRange = {
+  MIN: 10,
+  MAX: 100,
+};
+export const OfferDescriptionLengthRange = {
+  MIN: 20,
+  MAX: 1024,
+};
