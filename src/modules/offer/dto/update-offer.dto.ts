@@ -1,4 +1,4 @@
-import { City } from '../../../types/city.type.js';
+import { City, Location } from '../../../types/city.type.js';
 import { OfferGood } from '../../../types/offer-good.enum.js';
 import { TypeOfHousing } from '../../../types/type-of-housing.enum.js';
 
@@ -19,6 +19,5 @@ export default class UpdateOfferDto {
   public goods?: OfferGood[];
   public userId?: string;
   public commentsCount?: number;
-  public latitude?: number;
-  public longitude?: number;
+  public location?: Location;
 }

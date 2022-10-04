@@ -5,7 +5,7 @@ import { DocumentType, types } from '@typegoose/typegoose';
 import { OfferEntity } from './offer.entity.js';
 import { Component } from '../../types/component.types.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
-import { DEFAULT_OFFER_COUNT } from './offer.constant.js';
+import { DEFAULT_OFFER_COUNT, DEFAULT_PREMIUM_OFFER_COUNT } from './offer.constant.js';
 import UpdateOfferDto from './dto/update-offer.dto.js';
 import { SortType } from '../../types/sort-type.enum.js';
 
@@ -17,7 +17,8 @@ export default class OfferService implements OfferServiceInterface {
   ) { }
 
   public async create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>> {
-    const result = await this.offerModel.create(dto);
+
+    const result = await (await this.offerModel.create({ ...dto, commentsCount: 0, }));
     this.logger.info(`New offer created: ${dto.title}`);
 
     return result;
@@ -61,7 +62,7 @@ export default class OfferService implements OfferServiceInterface {
   }
 
   public async findIsPremiumByCity(city: string, count?: number): Promise<DocumentType<OfferEntity>[]> {
-    const limit = count ?? DEFAULT_OFFER_COUNT;
+    const limit = count ?? DEFAULT_PREMIUM_OFFER_COUNT;
     return this.offerModel
       .find({ city, isPremium: true })
       .sort({ createdAt: SortType.Down })
