@@ -48,6 +48,7 @@ export const RatingRange = {
   MIN: 1,
   MAX: 5,
   NUM_AFTER_DIGIT: 1,
+  DEFAULT_VALUE: 3.5,
 };
 export const MAX_ADULTS = 10;
 export const MAX_ROOMS = 8;
@@ -58,4 +59,15 @@ export const OfferTitleLengthRange = {
 export const OfferDescriptionLengthRange = {
   MIN: 20,
   MAX: 1024,
+};
+export const MAX_FILENAME_LENGTH = 256;
+
+export const PasswordRequirements = {
+  MIN_LENGTH: 6,
+  MAX_LENGTH: 12,
+};
+
+export const CommentRequirements = {
+  MIN_LENGTH: 5,
+  MAX_LENGTH: 1024,
 };

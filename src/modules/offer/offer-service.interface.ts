@@ -13,4 +13,5 @@ export interface OfferServiceInterface {
   findIsPremiumByCity(city: string, count?: number): Promise<DocumentType<OfferEntity>[]>;
   findIsFavoriteByUserId(userId: string): Promise<DocumentType<OfferEntity>[]>;
   toggleIsFavoriteById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
+  exists(documentId: string): Promise<boolean>;
 }
