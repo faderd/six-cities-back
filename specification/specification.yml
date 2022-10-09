@@ -79,7 +79,7 @@ paths:
                 $ref: "#/components/schemas/errorMessage"
 
   /offers/{offerId}:
-    post:
+    patch:
       tags:
         - offers
       summary: Редактирование предложения
@@ -106,7 +106,7 @@ paths:
             schema:
               $ref: "#/components/schemas/offer"
       responses:
-        "201":
+        "200":
           description: Предложение успешно отредактировано
           content:
             application/json:
@@ -183,6 +183,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/offer"
+        "400":
+          description: Ошибка запроса
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+        "404":
+          description: Предложение не найдено
 
   /offers/premium/{city}:
     get:
@@ -215,6 +223,12 @@ paths:
                 items:
                   type: object
                   $ref: "#/components/schemas/offer"
+        "400":
+          description: Ошибка запроса
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
 
   /users/register:
     post:
@@ -328,40 +342,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/errorMessage"
 
-  /comments/{offerId}:
-    get:
-      tags:
-        - comments
-      summary: Список комментариев для предложения
-      description: Сервис предоставляет ресурс для получения списка комментариев для определённого предложения.
-      parameters:
-        - name: offerId
-          in: path
-          description: Уникальный идентификатор предложения
-          required: true
-          schema:
-            type: number
-            example: 1
-        - name: X-Token
-          in: header
-          description: Авторизационный токен пользователя
-          required: false
-          schema:
-            type: string
-            example: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
-      responses:
-        "200":
-          description: Массив комментариев
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "#/components/schemas/comment"
-        "404":
-          description: Предложение не найдено
-
+  /comments:
     post:
       tags:
         - comments
@@ -369,12 +350,19 @@ paths:
       description: Сервис предоставляет ресурс для добавления комментариев к определённому предложению по аренде.
       parameters:
         - name: offerId
-          in: path
+          in: header
           description: Уникальный идентификатор предложения
           required: true
           schema:
             type: number
             example: 1
+        - name: userId
+          in: header
+          description: Уникальный идентификатор пользователя
+          required: true
+          schema:
+            type: string
+            example: pdmVyLmNvbm5lckBnbWFp
         - name: X-Token
           in: header
           description: Авторизационный токен пользователя
@@ -411,9 +399,44 @@ paths:
         "404":
           description: Предложение не найдено
 
-  /favorite:
+  /offers/{offerId}/comments:
     get:
       tags:
+        - offers
+      summary: Список комментариев для предложения
+      description: Сервис предоставляет ресурс для получения списка комментариев для определённого предложения.
+      parameters:
+        - name: offerId
+          in: path
+          description: Уникальный идентификатор предложения
+          required: true
+          schema:
+            type: number
+            example: 1
+        - name: X-Token
+          in: header
+          description: Авторизационный токен пользователя
+          required: false
+          schema:
+            type: string
+            example: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
+      responses:
+        "200":
+          description: Массив комментариев
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/comment"
+        "404":
+          description: Предложение не найдено
+
+  /offers/favorite:
+    get:
+      tags:
+        - offers
         - favorite
       summary: Список избранных предложений
       description: Возвращает массив предложений, добавленных в избранное
@@ -448,9 +471,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/authErrorMessage"
 
-  /favorite/{offerId}/{status}:
+  /offers/favorite/{offerId}/{status}:
     post:
       tags:
+        - offers
         - favorite
       summary: Изменить статус избранного у предложение
       description: Возвращает предложение с идентификатором `offerId` с актуальным состоянием поля `isFavorite`

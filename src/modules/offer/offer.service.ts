@@ -6,8 +6,9 @@ import { OfferEntity } from './offer.entity.js';
 import { Component } from '../../types/component.types.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import { DEFAULT_OFFER_COUNT, DEFAULT_PREMIUM_OFFER_COUNT } from './offer.constant.js';
-import UpdateOfferDto from './dto/update-offer.dto.js';
 import { SortType } from '../../types/sort-type.enum.js';
+import UpdateOfferDto from './dto/update-offer.dto.js';
+import { RatingRange } from '../../const.js';
 
 @injectable()
 export default class OfferService implements OfferServiceInterface {
@@ -16,9 +17,13 @@ export default class OfferService implements OfferServiceInterface {
     @inject(Component.OfferModel) private readonly offerModel: types.ModelType<OfferEntity>
   ) { }
 
+  public async exists(documentId: string): Promise<boolean> {
+    return (await this.offerModel.exists({ _id: documentId })) !== null;
+  }
+
   public async create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>> {
 
-    const result = await (await this.offerModel.create({ ...dto, commentsCount: 0, }));
+    const result = await (await this.offerModel.create({ ...dto, commentsCount: 0, rating: RatingRange.DEFAULT_VALUE }));
     this.logger.info(`New offer created: ${dto.title}`);
 
     return result;
@@ -56,7 +61,7 @@ export default class OfferService implements OfferServiceInterface {
     return this.offerModel
       .findByIdAndUpdate(offerId, {
         '$inc': {
-          commentCount: 1,
+          commentsCount: 1,
         }
       }).exec();
   }

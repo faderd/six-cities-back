@@ -20,7 +20,8 @@ export default class CommentService implements CommentServiceInterface {
     const comments = await this.commentModel.find({ offerId: dto.offerId }, {rating: 1}).exec();
     const calculatedRating = +(comments.reduce((sum, current) => sum + current.rating, 0) / comments.length).toFixed(RatingRange.NUM_AFTER_DIGIT);
 
-    this.OfferService.updateById(dto.offerId, {rating: calculatedRating});
+    await this.OfferService.updateById(dto.offerId, { rating: calculatedRating });
+    await this.OfferService.incCommentCount(dto.offerId);
 
     return comment;
   }
