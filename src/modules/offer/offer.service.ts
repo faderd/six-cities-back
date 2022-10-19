@@ -9,12 +9,14 @@ import { DEFAULT_OFFER_COUNT, DEFAULT_PREMIUM_OFFER_COUNT } from './offer.consta
 import { SortType } from '../../types/sort-type.enum.js';
 import UpdateOfferDto from './dto/update-offer.dto.js';
 import { RatingRange } from '../../const.js';
+import { UserServiceInterface } from '../user/user-service.interface.js';
 
 @injectable()
 export default class OfferService implements OfferServiceInterface {
   constructor(
     @inject(Component.LoggerInterface) private readonly logger: LoggerInterface,
-    @inject(Component.OfferModel) private readonly offerModel: types.ModelType<OfferEntity>
+    @inject(Component.OfferModel) private readonly offerModel: types.ModelType<OfferEntity>,
+    @inject(Component.UserServiceInterface) private userService: UserServiceInterface,
   ) { }
 
   public async exists(documentId: string): Promise<boolean> {
@@ -45,6 +47,9 @@ export default class OfferService implements OfferServiceInterface {
   }
 
   public async deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
+    // удалим оффер из избранного у всех пользователей
+    this.userService.removeFavoriteOffer(offerId);
+
     return this.offerModel
       .findByIdAndDelete(offerId)
       .exec();
@@ -77,19 +82,24 @@ export default class OfferService implements OfferServiceInterface {
   }
 
   public async findIsFavoriteByUserId(userId: string): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel
-      .find({ userId, isFavorite: true })
+    const favoriteOffersId = await this.userService.getFavoriteIdsByUserId(userId) || [];
+    const offers = this.offerModel.find({ _id: { $in: favoriteOffersId } });
+    return offers
+      .sort({ createdAt: SortType.Down })
       .populate(['userId'])
       .exec();
   }
 
-  public async toggleIsFavoriteById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel
-      .findOneAndUpdate({ offerId }, [{
-        '$set': {
-          'isFavorite': { '$eq': [false, '$isFavorite'] }
-        }
-      }], { new: true })
-      .exec();
+  public async toggleIsFavoriteById(offerId: string, action: number, userId: string): Promise<DocumentType<OfferEntity> | null> {
+    const isAddFavoriteOffer = action !== 0;
+
+    if (isAddFavoriteOffer) {
+      await this.userService.addFavoriteOffer(offerId, userId);
+    } else {
+      await this.userService.removeFavoriteOffer(offerId, userId);
+    }
+
+
+    return this.findById(offerId);
   }
 }

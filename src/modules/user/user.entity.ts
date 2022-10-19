@@ -20,6 +20,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
     this.email = data.email;
     this.avatarPath = data.avatarPath;
     this.userType = data.userType;
+    this.favoriteOffersId = data.favoriteOffersId;
   }
 
   @prop({
@@ -58,12 +59,24 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
   })
   public userType!: UserType;
 
+  @prop({
+    type: Array,
+    required: true,
+    default: [],
+  })
+  public favoriteOffersId!: string[];
+
   public setPassword(password: string, salt: string) {
     this.password = createSHA256(password, salt);
   }
 
   public getPassword() {
     return this.password;
+  }
+
+  public verifyPassword(password: string, salt: string) {
+    const hashPassword = createSHA256(password, salt);
+    return hashPassword === this.password;
   }
 }
 

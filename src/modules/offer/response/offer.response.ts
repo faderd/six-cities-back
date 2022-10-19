@@ -4,7 +4,7 @@ import { OfferGood } from '../../../types/offer-good.enum.js';
 import { TypeOfHousing } from '../../../types/type-of-housing.enum.js';
 import UserResponse from '../../user/response/user.response.js';
 
-export default class lOfferResponse {
+export default class OfferResponse {
   @Expose()
   public title!: string;
 
