@@ -13,6 +13,6 @@ export interface OfferServiceInterface extends DocumentExistsInterface {
   incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   findIsPremiumByCity(city: string, count?: number): Promise<DocumentType<OfferEntity>[]>;
   findIsFavoriteByUserId(userId: string): Promise<DocumentType<OfferEntity>[]>;
-  toggleIsFavoriteById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
+  toggleIsFavoriteById(offerId: string, action: number, userId: string): Promise<DocumentType<OfferEntity> | null>;
   exists(documentId: string): Promise<boolean>;
 }

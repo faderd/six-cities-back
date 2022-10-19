@@ -43,13 +43,13 @@ paths:
       summary: Создание нового предложения
       description: Ресурс для создания новых предложений авторизованным пользователем. В случае успешного создания предложения сервис в ответе возвращает информацию о созданном предложении (объект предложения).
       parameters:
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: true
           schema:
             type: string
-            example: dL0258fj43LjDFwW
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U
       requestBody:
         description: Объект с новым предложением
         content:
@@ -85,13 +85,13 @@ paths:
       summary: Редактирование предложения
       description: При попытке отредактировать чужое предложение или если валидация не пройдена, сервис возвращает ошибку. В случае успешного обновления предложения сервис возвращает обновлённый объект предложения.
       parameters:
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: true
           schema:
             type: string
-            example: dL0258fj43LjDFwW
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U
         - name: offerId
           in: path
           description: Уникальный идентификатор предложения
@@ -136,13 +136,13 @@ paths:
       summary: Удаление предложения по аренде
       description: Сервис предоставляет ресурс для удаления предложений по аренде.
       parameters:
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: true
           schema:
             type: string
-            example: dL0258fj43LjDFwW
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U
         - name: offerId
           in: path
           description: Уникальный идентификатор предложения
@@ -199,13 +199,13 @@ paths:
       summary: Премиальные предложения для города
       description: Премиальное предложение - предложение с флагом Premium
       parameters:
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: false
           schema:
             type: string
-            example: dL0258fj43LjDFwW
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U
         - name: city
           in: path
           description: Название города в CamelCase
@@ -291,13 +291,13 @@ paths:
       summary: Проверка статуса авторизации
       description: Возвращает информацию по авторизованному пользователю
       parameters:
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: true
           schema:
             type: string
-            example: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U=
       responses:
         "200":
           description: Пользователь авторизован
@@ -325,13 +325,13 @@ paths:
       summary: Выход из закрытой части приложения
       description: Предоставляет ресурс для завершения пользовательского сеанса
       parameters:
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: true
           schema:
             type: string
-            example: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U=
       responses:
         "204":
           description: Сеанс завершён
@@ -356,20 +356,13 @@ paths:
           schema:
             type: number
             example: 1
-        - name: userId
-          in: header
-          description: Уникальный идентификатор пользователя
-          required: true
-          schema:
-            type: string
-            example: pdmVyLmNvbm5lckBnbWFp
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: true
           schema:
             type: string
-            example: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U=
       requestBody:
         description: Объект с новым комментарием
         content:
@@ -413,13 +406,13 @@ paths:
           schema:
             type: number
             example: 1
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: false
           schema:
             type: string
-            example: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U=
       responses:
         "200":
           description: Массив комментариев
@@ -441,13 +434,13 @@ paths:
       summary: Список избранных предложений
       description: Возвращает массив предложений, добавленных в избранное
       parameters:
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: true
           schema:
             type: string
-            example: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U=
       responses:
         "200":
           description: Массив предложений
@@ -493,13 +486,13 @@ paths:
           schema:
             type: number
             example: 1
-        - name: X-Token
+        - name: Authorization
           in: header
           description: Авторизационный токен пользователя
           required: true
           schema:
             type: string
-            example: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
+            example: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU3NjIxOTMsImV4cCI6MTY2NTkzNDk5M30.NHSp5Ec41OmYnwlUyrx2Cf0yTKijwiRBl_fl5nP-38U
       responses:
         "200":
           description: Объект предложения
