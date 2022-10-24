@@ -27,7 +27,7 @@ Content-Type: application/json
 
 ## Проверка токена пользователя
 GET http://localhost:4000/users/login HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjY1MjQwMzUsImV4cCI6MTY2NjY5NjgzNX0._ZrEr1S8uDkX9iIG0EjARQy8Vh-qvlIV6bFH4MM0MLo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjY2MjI1NjQsImV4cCI6MTY2Njc5NTM2NH0.wSIF_OMiUlNgpJPWVDRc2K5A1UTvWotx1UV8ZnxLBtk
 
 ###
 
@@ -109,20 +109,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0Iiwia
 }
 ###
 
-## Загрузка изображения для картинки
-POST http://localhost:4000/offers/634ea0193a990c5eff66e64a/previewImage HTTP/1.1
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="avatar"; filename="items.jpg"
-Content-Type: image/png
-
-
-< ./markup/img/item03@2x.jpg
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-###
-
 ## Удаление оффера
 DELETE  http://localhost:4000/offers/634ea0233a990c5eff66e66a HTTP/1.1
 Content-Type: application/json
@@ -130,9 +116,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0Iiwia
 ###
 
 ## Запрос оффера
-GET  http://localhost:4000/offers/634ea0193a990c5eff66e64a HTTP/1.1
+GET  http://localhost:4000/offers/6356cfa86f6f4989b49bc724 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjY1MjA0NTYsImV4cCI6MTY2NjY5MzI1Nn0.qoUuZL-hQ0Akhq7fF_gaMcv2dz7-HVMkHOTM61wpWXM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjY1OTUyMjcsImV4cCI6MTY2Njc2ODAyN30.61dA7H3XNWNm8Jf8124R9IImvsaUBnJzmEIXfE1uiF8
 ###
 
 ## Запрос премиум офферов

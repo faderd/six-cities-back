@@ -1,5 +1,5 @@
-import { IsArray, IsBoolean, IsDateString, IsEnum, IsInt, IsMongoId, IsObject, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
-import { MAX_ADULTS, MAX_FILENAME_LENGTH, MAX_ROOMS, OfferDescriptionLengthRange, OfferTitleLengthRange, PriceRange } from '../../../const.js';
+import { IsArray, IsBoolean, IsDateString, IsEnum, IsInt, IsMongoId, IsObject, IsString, Length, Max, MaxLength, Min, MinLength } from 'class-validator';
+import { MAX_ADULTS, MAX_FILENAME_LENGTH, MAX_ROOMS, NUM_OF_IMAGES_IN_OFFER, OfferDescriptionLengthRange, OfferTitleLengthRange, PriceRange } from '../../../const.js';
 import { City, Location } from '../../../types/city.type.js';
 import { OfferGood } from '../../../types/offer-good.enum.js';
 import { TypeOfHousing } from '../../../types/type-of-housing.enum.js';
@@ -24,6 +24,7 @@ export default class CreateOfferDto {
 
   @IsArray({ message: 'Field images must be an array' })
   @IsString({ each: true, message: 'images field must be an array of valid strings' })
+  @Length(NUM_OF_IMAGES_IN_OFFER, NUM_OF_IMAGES_IN_OFFER, {message: `Images should be ${NUM_OF_IMAGES_IN_OFFER}`})
   public images!: string[];
 
   @IsBoolean({ message: 'ssPremium must be an boolean' })

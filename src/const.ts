@@ -71,3 +71,5 @@ export const CommentRequirements = {
   MIN_LENGTH: 5,
   MAX_LENGTH: 1024,
 };
+
+export const NUM_OF_IMAGES_IN_OFFER = 6;

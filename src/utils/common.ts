@@ -1,5 +1,4 @@
 import { OfferGood } from '../types/offer-good.enum.js';
-import { Offer } from '../types/offer.type.js';
 import { TypeOfHousing } from '../types/type-of-housing.enum.js';
 import { UserType } from '../types/user-type.enum.js';
 import { capitalizeFirstLetter, stringToPascalCase } from './string.js';
@@ -14,6 +13,7 @@ import { ValidationErrorField } from '../types/validation-error-field.type.js';
 import { ServiceError } from '../types/service-error.enum.js';
 import { UnknownObject } from '../types/unknown-object.type.js';
 import { DEFAULT_STATIC_IMAGES } from '../app/application.constant.js';
+import { Offer } from '../types/offer.type.js';
 
 export const createOffer = (row: string) => {
   const tokens = row.replace('\n', '').split('\t');
@@ -28,7 +28,7 @@ export const createOffer = (row: string) => {
     images: images.split(';')
       .map((url) => (url)),
     isPremium: (isPremium === 'true'),
-    isFavorite: (isFavorite === 'true'),
+    isFavorite: (isFavorite === 'false'),
     rating: Number.parseInt(rating, 10),
     typeOfHousing: TypeOfHousing[capitalizeFirstLetter(typeOfHousing) as 'Apartment' | 'House' | 'Room' | 'Hotel'],
     rooms: Number.parseInt(rooms, 10),
@@ -115,10 +115,22 @@ export const transformProperty = (
     });
 };
 
-export const transformObject = (properties: string[], staticPath: string, uploadPath: string, data:UnknownObject) => {
+export const transformObject = (properties: string[], staticPath: string, uploadPath: string, data: UnknownObject) => {
   properties
     .forEach((property) => transformProperty(property, data, (target: UnknownObject) => {
-      const rootPath = DEFAULT_STATIC_IMAGES.includes(target[property] as string) ? staticPath : uploadPath;
-      target[property] = `${rootPath}/${target[property]}`;
+
+      if (Array.isArray(target[property])) {
+        // если это массив ссылок, то нужно его перебрать в цикле
+        const paths: string[] = target[property] as string[];
+        target[property] = paths.map((path) => {
+          const rootPath = DEFAULT_STATIC_IMAGES.includes(path as string) ? staticPath : uploadPath;
+
+          return `${rootPath}/${path}`;
+        });
+      } else {
+        const rootPath = DEFAULT_STATIC_IMAGES.includes(target[property] as string) ? staticPath : uploadPath;
+
+        target[property] = `${rootPath}/${target[property]}`;
+      }
     }));
 };

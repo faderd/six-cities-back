@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { CITIES, MAX_ADULTS, MAX_ROOMS, PriceRange, RatingRange } from '../../const.js';
+import { CITIES, MAX_ADULTS, MAX_ROOMS, NUM_OF_IMAGES_IN_OFFER, PriceRange, RatingRange } from '../../const.js';
 import { MockData } from '../../types/mock-data.type.js';
 import { OfferGood } from '../../types/offer-good.enum.js';
 import { TypeOfHousing } from '../../types/type-of-housing.enum.js';
@@ -20,10 +20,10 @@ export default class OfferGenerator implements OfferGeneratorInterface {
   public generate(): string {
     const title = getRandomItem<string>(this.mockData.titles);
     const description = getRandomItem<string>(this.mockData.descriptions);
-    const createdDate =  dayjs().subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day').toISOString();
+    const createdDate = dayjs().subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day').toISOString();
     const cityName = getRandomItem<string>(this.mockData.cities);
-    const previewImage = getRandomItem<string>(this.mockData.previewImages);
-    const images = getRandomItems<string>(this.mockData.images).join(';');
+    const previewImage = getRandomItem<string>(this.mockData.images);
+    const images = getRandomItems<string>(this.mockData.images, NUM_OF_IMAGES_IN_OFFER).join(';');
     const isPremium = getRandomItem<string>(['true', 'false']);
     const isFavorite = getRandomItem<string>(['true', 'false']);
     const rating = generateRandomValue(RatingRange.MIN, RatingRange.MAX, RatingRange.NUM_AFTER_DIGIT);
@@ -47,7 +47,7 @@ export default class OfferGenerator implements OfferGeneratorInterface {
     const longitude = generateRandomValue(cityLongitude - LOCATION_DEVIATION, cityLongitude + LOCATION_DEVIATION, LOCATION_NUM_AFTER_DIGIT);
 
     return [
-      title, description, createdDate, cityName, previewImage, images, isPremium, isFavorite, rating, typeOfHousing, rooms, maxAdults, price, goods, name, email, avatar, password, userType, commentsCount, latitude, longitude,
+      title, description, createdDate, cityName, previewImage, images, isPremium, isFavorite, rating, typeOfHousing, rooms, maxAdults, price, goods, name, email, avatar, password, userType, commentsCount, latitude, longitude
     ].join('\t');
   }
 }
