@@ -161,11 +161,10 @@ GET http://localhost:4000/offers/633c4a488baf59e82e1d8e93/comments HTTP/1.1
 # Избранные офферы
 ## Переключение избранного оффера
 POST http://localhost:4000/offers/favorite/634ea01a3a990c5eff66e652/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU5OTA5MzMsImV4cCI6MTY2NjE2MzczM30.PwH58Kpi-GUhoMlwYpjfbxtT5E_GMRmcL863FhIDWQg
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjY1OTUyMjcsImV4cCI6MTY2Njc2ODAyN30.61dA7H3XNWNm8Jf8124R9IImvsaUBnJzmEIXfE1uiF8
 ###
 
 ## Запрос избранных офферов
-GET http://localhost:4000/offers/favorite HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjU5OTA5MzMsImV4cCI6MTY2NjE2MzczM30.PwH58Kpi-GUhoMlwYpjfbxtT5E_GMRmcL863FhIDWQg
+GET http://localhost:4000/favorite HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQG1haWwubmV0IiwiaWQiOiI2MzQ5NGI1ZDE5YzYwZDY4ODcyZGVkNDciLCJpYXQiOjE2NjY1OTUyMjcsImV4cCI6MTY2Njc2ODAyN30.61dA7H3XNWNm8Jf8124R9IImvsaUBnJzmEIXfE1uiF8
 ###

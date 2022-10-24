@@ -53,8 +53,6 @@ export default class OfferController extends Controller {
       ],
     });
 
-    this.addRoute({ path: '/favorite', method: HttpMethod.Get, handler: this.getFavoriteOffers, middlewares: [this.privateRouteMiddleware] });
-
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Patch,
@@ -99,16 +97,6 @@ export default class OfferController extends Controller {
     });
 
     this.addRoute({ path: '/premium/:city', method: HttpMethod.Get, handler: this.getPremiumOffers });
-
-    this.addRoute({
-      path: '/favorite/:offerId/:status',
-      method: HttpMethod.Post,
-      handler: this.toggleFavoriteOffer,
-      middlewares: [
-        this.privateRouteMiddleware,
-        this.validateOfferIdMiddleware,
-      ],
-    });
 
     this.addRoute({
       path: '/:offerId/previewImage',
@@ -175,20 +163,6 @@ export default class OfferController extends Controller {
   ): Promise<void> {
     const comments = await this.commentService.findByOfferId(params.offerId);
     this.ok(res, fillDTO(CommentResponse, comments));
-  }
-
-  public async getFavoriteOffers(req: Request, res: Response): Promise<void> {
-    const offers = await this.offerService.findIsFavoriteByUserId(req.user.id);
-
-    setIsFavoriteFlag(offers, await this.userService.getFavoriteIdsByUserId(req.user?.id));
-    this.ok(res, fillDTO(OfferResponse, offers));
-  }
-
-  public async toggleFavoriteOffer(req: Request, res: Response): Promise<void> {
-    const offer = await this.offerService.toggleIsFavoriteById(req.params.offerId, +req.params.status, req.user.id);
-
-    setIsFavoriteFlag([offer], await this.userService.getFavoriteIdsByUserId(req.user?.id));
-    this.ok(res, fillDTO(OfferResponse, offer));
   }
 
   public async uploadPreviewImage(req: Request<core.ParamsDictionary | ParamsGetOffer>, res: Response) {
