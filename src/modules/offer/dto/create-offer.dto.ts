@@ -29,9 +29,6 @@ export default class CreateOfferDto {
   @IsBoolean({ message: 'ssPremium must be an boolean' })
   public isPremium!: boolean;
 
-  @IsBoolean({ message: 'ssFavorite must be an boolean' })
-  public isFavorite!: boolean;
-
   @IsEnum(TypeOfHousing, { message: `type must be one of ${Object.keys(TypeOfHousing)}` })
   public typeOfHousing!: TypeOfHousing;
 
