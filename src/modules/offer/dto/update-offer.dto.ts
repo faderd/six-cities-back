@@ -37,7 +37,7 @@ export default class UpdateOfferDto {
   public isPremium?: boolean;
 
   @IsOptional()
-  @IsBoolean({ message: 'ssFavorite must be an boolean' })
+  @IsBoolean({ message: 'isFavorite must be an boolean' })
   public isFavorite?: boolean;
 
   @IsOptional()

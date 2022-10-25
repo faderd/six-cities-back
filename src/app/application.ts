@@ -9,6 +9,8 @@ import express, { Express } from 'express';
 import { ExceptionFilterInterface } from '../common/errors/exception-filter.interface.js';
 import { ControllerInterface } from '../common/controller/controller.interface.js';
 import { AuthenticateMiddleware } from '../common/middlewares/authenticate.middleware.js';
+import { getFullServerPath } from '../utils/common.js';
+import cors from 'cors';
 
 @injectable()
 export default class Application {
@@ -21,6 +23,7 @@ export default class Application {
     @inject(Component.UserController) private userController: ControllerInterface,
     @inject(Component.OfferController) private offerController: ControllerInterface,
     @inject(Component.CommentController) private commentController: ControllerInterface,
+    @inject(Component.FavoriteController) private favoriteController: ControllerInterface,
   ) {
     this.expressApp = express();
   }
@@ -29,6 +32,7 @@ export default class Application {
     this.expressApp.use('/users', this.userController.router);
     this.expressApp.use('/offers', this.offerController.router);
     this.expressApp.use('/comments', this.commentController.router);
+    this.expressApp.use('/favorite', this.favoriteController.router);
   }
 
   public initMiddleware() {
@@ -37,9 +41,15 @@ export default class Application {
       '/upload',
       express.static(this.config.get('UPLOAD_DIRECTORY')),
     );
+    this.expressApp.use(
+      '/static',
+      express.static(this.config.get('STATIC_DIRECTORY_PATH'))
+    );
 
     const authenticateMiddleware = new AuthenticateMiddleware(this.config.get('JWT_SECRET'));
     this.expressApp.use(authenticateMiddleware.execute.bind(authenticateMiddleware));
+
+    this.expressApp.use(cors());
   }
 
   public initExceptionFilters() {
@@ -64,6 +74,6 @@ export default class Application {
     this.registerRoutes();
     this.initExceptionFilters();
     this.expressApp.listen(this.config.get('PORT'));
-    this.logger.info(`Server started on http://localhost:${this.config.get('PORT')}`);
+    this.logger.info(`Server started on ${getFullServerPath(this.config.get('HOST'), this.config.get('PORT'))}`);
   }
 }

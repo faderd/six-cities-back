@@ -9,9 +9,6 @@ export default class CreateUserDto {
   @IsEmail({}, { message: 'email must be valid address' })
   public email!: string;
 
-  @IsString({ message: 'avatarPath is required' })
-  public avatarPath!: string;
-
   @IsString({ message: 'password is required' })
   @MinLength(PasswordRequirements.MIN_LENGTH, { message: `Minimum password length must be ${PasswordRequirements.MIN_LENGTH}` })
   @MaxLength(PasswordRequirements.MAX_LENGTH, { message: `Maximum password length must be ${PasswordRequirements.MAX_LENGTH}` })

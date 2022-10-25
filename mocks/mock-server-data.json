@@ -1,36 +1,22 @@
 {
   "api": {
     "titles": [
-      "Тёмная башня",
-      "Стрелок",
-      "Извлечение троих",
-      "Куджо",
-      "Глаза дракона",
-      "Зелёная миля",
-      "Кристина",
-      "Жребий Салема",
-      "Бегущий человек",
-      "История Лизи",
-      "Долгая прогулка",
-      "Институт",
-      "Худеющий",
-      "Гвенди и её волшебная шкатулка",
-      "Мобильник",
-      "Черновик",
-      "Ночной Дозор",
-      "Крёстный Отец",
-      "Атлант расправил плечи"
+      "Nice, cozy, warm big bed apartment",
+      "Loft Studio in the Central Area",
+      "Penthouse, 4-5 rooms + 5 balconies",
+      "Amazing and Extremely Central Flat",
+      "Wood and stone place",
+      "The Joshua Tree House",
+      "Perfectly located Castro",
+      "House in countryside"
     ],
     "descriptions": [
-      "Страшный рассказ о драконе. Колдовство, предательство и необыкновенный мир фэнтези.",
-      "История про вампиров из маленького городка. Коварство, нестандартный сюжет и необыкновенные приключения священника.",
-      "Идти или остановиться? Вопрос без правильного ответа. Рассказ о долгой и смертельной прогулке.",
-      "Как похудеть и не сойти с ума? А как вернуть вес обратно? Необычная история противостояния.",
-      "Прими звонок и превратись в зомби. Рассказ о зомбировании через средства связи.",
-      "Виновен или нет? Какая разница. Исход один. Сверхспособности не помогут.",
-      "И у машин есть душа. Хорошо ли это? Мистический рассказ про автомобиль.",
-      "Криминальная сага от неповторимого Марио Пьюзо. Перестрелки, погони, предательство и дружба.",
-      "Мир населяют не только люди. Иные живут вместе с ними и визуально ничем не отличаются. История про магию и могущественных существ. Борьба сил Добра и Зла."
+      "I am happy to welcome you to my apartment in the city center! Three words: location, cosy and chic!",
+      "Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.",
+      "This is a place for dreamers to reset, reflect, and create. Designed with a 'slow' pace in mind, our hope is that you enjoy every part of your stay; from making local coffee by drip in the morning, choosing the perfect record to put on as the sun sets.",
+      "I rent out a very sunny and bright apartment only 7 minutes walking distance to the metro station. The apartment has a spacious living room with a kitchen, one bedroom and a bathroom with mit bath. A terrace can be used in summer.",
+      "A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.",
+      "Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs."
     ],
     "cities": [
       "Paris",
@@ -40,39 +26,27 @@
       "Hamburg",
       "Dusseldorf"
     ],
-    "previewImages": [
-      "rcpka.jpg",
-      "wxelc.jpg",
-      "ronit.jpg",
-      "ukmgr.jpg",
-      "hsbam.jpg",
-      "nvaon.jpg",
-      "yhylk.jpg",
-      "wwzga.jpg",
-      "stswo.jpg",
-      "deilr.jpg",
-      "wphta.jpg",
-      "kxtqm.jpg",
-      "rdokd.jpg",
-      "uixpd.jpg",
-      "tqbfc.jpg"
-    ],
     "images": [
-      "wa-qtqoaf.jpg",
-      "ozrat-lxf.jpg",
-      "eee-pffps.jpg",
-      "adoyp-doi.jpg",
-      "yr-gxzltl.jpg",
-      "uuoqmi-ig.jpg",
-      "ojw-tgvqd.jpg",
-      "f-mqsondb.jpg",
-      "piykkg-gk.jpg",
-      "yhs-cwzpo.jpg",
-      "r-ipvskdc.jpg",
-      "wjwy-psga.jpg",
-      "gut-jgdxb.jpg",
-      "eucbo-zux.jpg",
-      "aan-uehnc.jpg"
+      "hotels/1.jpg",
+      "hotels/2.jpg",
+      "hotels/3.jpg",
+      "hotels/4.jpg",
+      "hotels/5.jpg",
+      "hotels/6.jpg",
+      "hotels/7.jpg",
+      "hotels/8.jpg",
+      "hotels/9.jpg",
+      "hotels/10.jpg",
+      "hotels/11.jpg",
+      "hotels/12.jpg",
+      "hotels/13.jpg",
+      "hotels/14.jpg",
+      "hotels/15.jpg",
+      "hotels/16.jpg",
+      "hotels/17.jpg",
+      "hotels/18.jpg",
+      "hotels/19.jpg",
+      "hotels/20.jpg"
     ],
     "names": [
       "Иван Иванов",
@@ -87,30 +61,21 @@
       "Джон Смит"
     ],
     "emails": [
-      "snow@pisem.local",
-      "president@dka.local",
-      "fish@big.local",
-      "test@pisem.local",
-      "freedom@pisem.local",
-      "rolan@pochta.local",
-      "author@mir.local",
-      "test@lost.loca",
-      "kujo-fan@story.local"
+      "snow@pisem.com",
+      "president@dka.com",
+      "fish@big.com",
+      "test@pisem.com",
+      "freedom@pisem.com",
+      "rolan@pochta.com",
+      "author@mir.com",
+      "test@lost.com",
+      "kujo-fan@story.com"
     ],
     "avatars": [
-      "user.jpg",
-      "photo.jpg",
-      "awesome-avatar.jpg",
-      "roland.jpg",
-      "smit.jpg",
-      "coffee.jpg"
+      "default-avatar.jpg"
     ],
     "passwords": [
-      "a0MIkvdv",
-      "xeRPyk4O",
-      "ivNJ4KSO",
-      "lEDaUMMj",
-      "May3b4Dg"
+      "password"
     ]
   }
 }

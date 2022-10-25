@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
+import { ConfigInterface } from '../../common/config/config.interface.js';
 import { Controller } from '../../common/controller/controller.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import { DocumentExistsMiddleware } from '../../common/middlewares/document-exists.middleware.js';
 import { PrivateRouteMiddleware } from '../../common/middlewares/private-route.middleware.js';
+import { UploadFileMiddleware } from '../../common/middlewares/upload-file.middleware.js';
 import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware.js';
 import { ValidateObjectIdMiddleware } from '../../common/middlewares/validate-objectid.middleware.js';
 import { Component } from '../../types/component.types.js';
@@ -15,11 +17,18 @@ import { UserServiceInterface } from '../user/user-service.interface.js';
 import CreateOfferDto from './dto/create-offer.dto.js';
 import { OfferServiceInterface } from './offer-service.interface.js';
 import OfferResponse from './response/offer.response.js';
+import UploadPreviewImageResponse from './response/upload-image.response.js';
+import * as core from 'express-serve-static-core';
+
+type ParamsGetOffer = {
+  offerId: string;
+}
 
 @injectable()
 export default class OfferController extends Controller {
   constructor(
     @inject(Component.LoggerInterface) logger: LoggerInterface,
+    @inject(Component.ConfigInterface) configService: ConfigInterface,
     @inject(Component.OfferServiceInterface) private readonly offerService: OfferServiceInterface,
     @inject(Component.CommentServiceInterface) private readonly commentService: CommentServiceInterface,
     @inject(Component.UserServiceInterface) private readonly userService: UserServiceInterface,
@@ -29,7 +38,7 @@ export default class OfferController extends Controller {
     private documentOfferExistMiddleware = new DocumentExistsMiddleware(offerService, 'Offer', 'offerId'),
     private privateRouteMiddleware = new PrivateRouteMiddleware(),
   ) {
-    super(logger);
+    super(logger, configService);
     this.logger.info('Register routes for OfferController…');
 
     this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.getOffers });
@@ -43,8 +52,6 @@ export default class OfferController extends Controller {
         this.validateCreateOfferDtoMiddleware,
       ],
     });
-
-    this.addRoute({ path: '/favorite', method: HttpMethod.Get, handler: this.getFavoriteOffers, middlewares: [this.privateRouteMiddleware] });
 
     this.addRoute({
       path: '/:offerId',
@@ -92,12 +99,13 @@ export default class OfferController extends Controller {
     this.addRoute({ path: '/premium/:city', method: HttpMethod.Get, handler: this.getPremiumOffers });
 
     this.addRoute({
-      path: '/favorite/:offerId/:status',
+      path: '/:offerId/previewImage',
       method: HttpMethod.Post,
-      handler: this.toggleFavoriteOffer,
+      handler: this.uploadPreviewImage,
       middlewares: [
         this.privateRouteMiddleware,
         this.validateOfferIdMiddleware,
+        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'previewImage'),
       ],
     });
   }
@@ -157,17 +165,10 @@ export default class OfferController extends Controller {
     this.ok(res, fillDTO(CommentResponse, comments));
   }
 
-  public async getFavoriteOffers(req: Request, res: Response): Promise<void> {
-    const offers = await this.offerService.findIsFavoriteByUserId(req.user.id);
-
-    setIsFavoriteFlag(offers, await this.userService.getFavoriteIdsByUserId(req.user?.id));
-    this.ok(res, fillDTO(OfferResponse, offers));
-  }
-
-  public async toggleFavoriteOffer(req: Request, res: Response): Promise<void> {
-    const offer = await this.offerService.toggleIsFavoriteById(req.params.offerId, +req.params.status, req.user.id);
-
-    setIsFavoriteFlag([offer], await this.userService.getFavoriteIdsByUserId(req.user?.id));
-    this.ok(res, fillDTO(OfferResponse, offer));
+  public async uploadPreviewImage(req: Request<core.ParamsDictionary | ParamsGetOffer>, res: Response) {
+    const { offerId } = req.params;
+    const updateDto = { previewImage: req.file?.filename };
+    await this.offerService.updateById(offerId, updateDto);
+    this.created(res, fillDTO(UploadPreviewImageResponse, { updateDto }));
   }
 }

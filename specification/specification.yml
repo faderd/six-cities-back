@@ -426,10 +426,9 @@ paths:
         "404":
           description: Предложение не найдено
 
-  /offers/favorite:
+  /favorite:
     get:
       tags:
-        - offers
         - favorite
       summary: Список избранных предложений
       description: Возвращает массив предложений, добавленных в избранное
@@ -464,10 +463,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/authErrorMessage"
 
-  /offers/favorite/{offerId}/{status}:
+  /favorite/{offerId}/{status}:
     post:
       tags:
-        - offers
         - favorite
       summary: Изменить статус избранного у предложение
       description: Возвращает предложение с идентификатором `offerId` с актуальным состоянием поля `isFavorite`
