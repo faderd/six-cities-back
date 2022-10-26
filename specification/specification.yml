@@ -55,7 +55,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/offer"
+              $ref: "#/components/schemas/offerCreate"
       responses:
         "201":
           description: Предложение успешно создано
@@ -376,7 +376,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/comment"
+                $ref: "#/components/schemas/commentResponse"
         "400":
           description: Ошибка запроса
           content:
@@ -517,6 +517,10 @@ components:
       type: object
 
       properties:
+        id:
+          type: string
+          example: 6356cfa86f6f4989b49bc724
+
         title:
           type: string
           example: Гвенди и её волшебная шкатулка
@@ -577,13 +581,79 @@ components:
             type: string
             example: Washer
 
-        userId:
-          type: string
-          example: 47a9d93efa
+        user:
+         type: object
+         $ref: "#/components/schemas/userResponse"
 
-        commetsCount:
+        commentCount:
           type: number
           example: 4
+
+        location:
+          type: object
+          properties:
+            latitude:
+              type: number
+              example: 52.35514938496378
+            longitude:
+              type: number
+              example: 4.673877537499948
+
+    offerCreate:
+      type: object
+
+      properties:
+        title:
+          type: string
+          example: Гвенди и её волшебная шкатулка
+
+        description:
+          type: string
+          example: И у машин есть душа. Хорошо ли это? Мистический рассказ про автомобиль.
+
+        city:
+          type: string
+          example: Paris
+
+        previewImage:
+          type: string
+          example: img/abc.png
+
+        images:
+          type: array
+          items:
+            type: string
+            example: img/1.png
+
+        isPremium:
+          type: boolean
+          example: true
+
+        typeOfHousing:
+          type: string
+          example: house
+
+        rooms:
+          type: number
+          example: 4
+
+        maxAdults:
+          type: number
+          example: 3
+
+        price:
+          type: number
+          example: 15843
+
+        goods:
+          type: array
+          items:
+            type: string
+            example: Washer
+
+        user:
+          type: object
+          $ref: "#/components/schemas/userResponse"
 
         location:
           type: object
@@ -657,6 +727,25 @@ components:
           type: string
           example: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
 
+    userResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 63494b5d19c60d68872ded47
+        name:
+          type: string
+          example: user1
+        email:
+          type: string
+          example: user1@mail.net
+        avatarPath:
+          type: string
+          example: http://localhost:4000/upload/TA2U2G9p6-I1dcoV6Tz68.jpeg
+        userType:
+          type: string
+          example: NotPro
+
     errorMessage:
       type: object
       properties:
@@ -674,15 +763,31 @@ components:
     comment:
       type: object
       properties:
-        comment:
+        text:
           type: string
           example: Идти или остановиться? Вопрос без правильного ответа. Рассказ о долгой и смертельной прогулке.
-        date:
-          type: string
-          example: 2019-05-08T14:13:56.569Z
         rating:
           type: number
           example: 4
-        userId:
+        offerId:
           type: string
-          example: 47a9d93efa
+          example: 634ea0193a990c5eff66e64a
+
+    commentResponse:
+      type: object
+      properties:
+        id:
+         type: string
+         example: 6359702c60b4ce421828a834
+        text:
+         type: string
+         example: Как обстоят дела с коробками? Фирменная упаковка сохранена?
+        rating:
+         type: number
+         example: 3
+        postDate:
+         type: string
+         example: 2022-10-26T17:36:44.559Z
+        user:
+         type: object
+         $ref: "#/components/schemas/userResponse"
