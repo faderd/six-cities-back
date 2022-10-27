@@ -79,11 +79,7 @@ export const setIsFavoriteFlag = (offers: DocumentType<OfferEntity>[] | (Documen
   offers?.forEach((offer) => {
     if (offer === null) { return; }
 
-    if (favoriteIds.includes(offer.id)) {
-      offer.isFavorite = true;
-    } else {
-      offer.isFavorite = false;
-    }
+    offer.isFavorite = favoriteIds.includes(offer.id);
   });
 
   return offers;
