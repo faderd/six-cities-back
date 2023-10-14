@@ -19,8 +19,10 @@ export default class CommentController extends Controller {
   constructor(
     @inject(Component.LoggerInterface) logger: LoggerInterface,
     @inject(Component.ConfigInterface) configService: ConfigInterface,
-    @inject(Component.CommentServiceInterface) private readonly commentService: CommentServiceInterface,
-    @inject(Component.OfferServiceInterface) private readonly offerService: OfferServiceInterface,
+    @inject(Component.CommentServiceInterface)
+    private readonly commentService: CommentServiceInterface,
+    @inject(Component.OfferServiceInterface)
+    private readonly offerService: OfferServiceInterface,
   ) {
     super(logger, configService);
 
@@ -32,7 +34,7 @@ export default class CommentController extends Controller {
       middlewares: [
         new PrivateRouteMiddleware(),
         new ValidateDtoMiddleware(CreateCommentDto),
-      ]
+      ],
     });
   }
 
@@ -40,9 +42,8 @@ export default class CommentController extends Controller {
     req: Request<object, object, CreateCommentDto>,
     res: Response,
   ): Promise<void> {
-
     const { body } = req;
-    if (!await this.offerService.exists(body.offerId)) {
+    if (!(await this.offerService.exists(body.offerId))) {
       throw new HttpError(
         StatusCodes.NOT_FOUND,
         `Offer with id ${body.offerId} not found.`,
@@ -50,7 +51,10 @@ export default class CommentController extends Controller {
       );
     }
 
-    const comment = await this.commentService.create({ ...body, userId: req.user.id });
+    const comment = await this.commentService.create({
+      ...body,
+      userId: req.user.id,
+    });
     this.created(res, fillDTO(CommentResponse, comment));
   }
 }

@@ -3,7 +3,7 @@ import { ConfigInterface } from './config.interface.js';
 import { config } from 'dotenv';
 import { LoggerInterface } from '../logger/logger.interface.js';
 import { configSchema, ConfigSchema } from './config.schema.js';
-import {inject, injectable} from 'inversify';
+import { inject, injectable } from 'inversify';
 import { Component } from '../../types/component.types.js';
 
 @injectable()
@@ -17,11 +17,11 @@ export default class ConfigService implements ConfigInterface {
     const parseOutput = config();
 
     if (parseOutput.error) {
-      throw new Error('Can\'t read .env file. Perhaps the file does not exist.');
+      throw new Error("Can't read .env file. Perhaps the file does not exist.");
     }
 
     configSchema.load({});
-    configSchema.validate({allowed: 'strict', output: this.logger.info});
+    configSchema.validate({ allowed: 'strict', output: this.logger.info });
 
     this.config = configSchema.getProperties();
     this.logger.info('.env file found and successfully parsed!');

@@ -1,18 +1,48 @@
-import { IsArray, IsBoolean, IsDateString, IsEnum, IsInt, IsMongoId, IsObject, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
-import { MAX_ADULTS, MAX_FILENAME_LENGTH, MAX_ROOMS, OfferDescriptionLengthRange, OfferTitleLengthRange, PriceRange, RatingRange } from '../../../const.js';
+import {
+  IsArray,
+  IsBoolean,
+  IsDateString,
+  IsEnum,
+  IsInt,
+  IsMongoId,
+  IsObject,
+  IsOptional,
+  IsString,
+  Max,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator';
+import {
+  MAX_ADULTS,
+  MAX_FILENAME_LENGTH,
+  MAX_ROOMS,
+  OfferDescriptionLengthRange,
+  OfferTitleLengthRange,
+  PriceRange,
+  RatingRange,
+} from '../../../const.js';
 import { City, Location } from '../../../types/city.type.js';
 import { OfferGood } from '../../../types/offer-good.enum.js';
 import { TypeOfHousing } from '../../../types/type-of-housing.enum.js';
 
 export default class UpdateOfferDto {
   @IsOptional()
-  @MinLength(OfferTitleLengthRange.MIN, { message: `Minimum title length must be ${OfferTitleLengthRange.MIN}` })
-  @MaxLength(OfferTitleLengthRange.MAX, { message: `Maximum title length must be ${OfferTitleLengthRange.MAX}` })
+  @MinLength(OfferTitleLengthRange.MIN, {
+    message: `Minimum title length must be ${OfferTitleLengthRange.MIN}`,
+  })
+  @MaxLength(OfferTitleLengthRange.MAX, {
+    message: `Maximum title length must be ${OfferTitleLengthRange.MAX}`,
+  })
   public title?: string;
 
   @IsOptional()
-  @MinLength(OfferDescriptionLengthRange.MIN, { message: `Minimum description length must be ${OfferDescriptionLengthRange.MIN}` })
-  @MaxLength(OfferDescriptionLengthRange.MAX, { message: `Maximum description length must be ${OfferDescriptionLengthRange.MAX}` })
+  @MinLength(OfferDescriptionLengthRange.MIN, {
+    message: `Minimum description length must be ${OfferDescriptionLengthRange.MIN}`,
+  })
+  @MaxLength(OfferDescriptionLengthRange.MAX, {
+    message: `Maximum description length must be ${OfferDescriptionLengthRange.MAX}`,
+  })
   public description?: string;
 
   @IsOptional()
@@ -24,12 +54,17 @@ export default class UpdateOfferDto {
   public city?: City['name'];
 
   @IsOptional()
-  @MaxLength(MAX_FILENAME_LENGTH, { message: 'Too short for field previewImage' })
+  @MaxLength(MAX_FILENAME_LENGTH, {
+    message: 'Too short for field previewImage',
+  })
   public previewImage?: string;
 
   @IsOptional()
   @IsArray({ message: 'Field images must be an array' })
-  @IsString({ each: true, message: 'images field must be an array of valid strings' })
+  @IsString({
+    each: true,
+    message: 'images field must be an array of valid strings',
+  })
   public images?: string[];
 
   @IsOptional()
@@ -42,12 +77,18 @@ export default class UpdateOfferDto {
 
   @IsOptional()
   @IsInt({ message: 'rating must be an integer' })
-  @Min(RatingRange.MIN, { message: `Minimum rating must be ${RatingRange.MIN}` })
-  @Max(RatingRange.MAX, { message: `Maximum rating must be ${RatingRange.MAX}` })
+  @Min(RatingRange.MIN, {
+    message: `Minimum rating must be ${RatingRange.MIN}`,
+  })
+  @Max(RatingRange.MAX, {
+    message: `Maximum rating must be ${RatingRange.MAX}`,
+  })
   public rating?: number;
 
   @IsOptional()
-  @IsEnum(TypeOfHousing, { message: `type must be one of ${Object.keys(TypeOfHousing)}` })
+  @IsEnum(TypeOfHousing, {
+    message: `type must be one of ${Object.keys(TypeOfHousing)}`,
+  })
   public typeOfHousing?: TypeOfHousing;
 
   @IsOptional()
@@ -78,7 +119,7 @@ export default class UpdateOfferDto {
   public userId?: string;
 
   @IsOptional()
-  @IsInt({message: 'commentsCount must be an integer'})
+  @IsInt({ message: 'commentsCount must be an integer' })
   public commentsCount?: number;
 
   @IsOptional()

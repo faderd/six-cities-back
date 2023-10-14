@@ -22,26 +22,41 @@ import * as core from 'express-serve-static-core';
 
 type ParamsGetOffer = {
   offerId: string;
-}
+};
 
 @injectable()
 export default class OfferController extends Controller {
   constructor(
     @inject(Component.LoggerInterface) logger: LoggerInterface,
     @inject(Component.ConfigInterface) configService: ConfigInterface,
-    @inject(Component.OfferServiceInterface) private readonly offerService: OfferServiceInterface,
-    @inject(Component.CommentServiceInterface) private readonly commentService: CommentServiceInterface,
-    @inject(Component.UserServiceInterface) private readonly userService: UserServiceInterface,
+    @inject(Component.OfferServiceInterface)
+    private readonly offerService: OfferServiceInterface,
+    @inject(Component.CommentServiceInterface)
+    private readonly commentService: CommentServiceInterface,
+    @inject(Component.UserServiceInterface)
+    private readonly userService: UserServiceInterface,
 
-    private validateOfferIdMiddleware = new ValidateObjectIdMiddleware('offerId'),
-    private validateCreateOfferDtoMiddleware = new ValidateDtoMiddleware(CreateOfferDto),
-    private documentOfferExistMiddleware = new DocumentExistsMiddleware(offerService, 'Offer', 'offerId'),
+    private validateOfferIdMiddleware = new ValidateObjectIdMiddleware(
+      'offerId',
+    ),
+    private validateCreateOfferDtoMiddleware = new ValidateDtoMiddleware(
+      CreateOfferDto,
+    ),
+    private documentOfferExistMiddleware = new DocumentExistsMiddleware(
+      offerService,
+      'Offer',
+      'offerId',
+    ),
     private privateRouteMiddleware = new PrivateRouteMiddleware(),
   ) {
     super(logger, configService);
     this.logger.info('Register routes for OfferController…');
 
-    this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.getOffers });
+    this.addRoute({
+      path: '/',
+      method: HttpMethod.Get,
+      handler: this.getOffers,
+    });
 
     this.addRoute({
       path: '/',
@@ -96,7 +111,11 @@ export default class OfferController extends Controller {
       ],
     });
 
-    this.addRoute({ path: '/premium/:city', method: HttpMethod.Get, handler: this.getPremiumOffers });
+    this.addRoute({
+      path: '/premium/:city',
+      method: HttpMethod.Get,
+      handler: this.getPremiumOffers,
+    });
 
     this.addRoute({
       path: '/:offerId/previewImage',
@@ -105,32 +124,51 @@ export default class OfferController extends Controller {
       middlewares: [
         this.privateRouteMiddleware,
         this.validateOfferIdMiddleware,
-        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'previewImage'),
+        new UploadFileMiddleware(
+          this.configService.get('UPLOAD_DIRECTORY'),
+          'previewImage',
+        ),
       ],
     });
   }
 
   public async getOffers(req: Request, res: Response): Promise<void> {
     const offers = await this.offerService.find();
-    setIsFavoriteFlag(offers, await this.userService.getFavoriteIdsByUserId(req.user?.id));
+    setIsFavoriteFlag(
+      offers,
+      await this.userService.getFavoriteIdsByUserId(req.user?.id),
+    );
     this.ok(res, fillDTO(OfferResponse, offers));
   }
 
   public async createOffer(
-    req: Request<Record<string, unknown>, Record<string, unknown>, CreateOfferDto>,
+    req: Request<
+      Record<string, unknown>,
+      Record<string, unknown>,
+      CreateOfferDto
+    >,
     res: Response,
   ): Promise<void> {
     const { body, user } = req;
-    const createdOffer = await this.offerService.create({ ...body, userId: user.id });
+    const createdOffer = await this.offerService.create({
+      ...body,
+      userId: user.id,
+    });
     const findedOffer = await this.offerService.findById(createdOffer.id);
 
     this.created(res, fillDTO(OfferResponse, findedOffer));
   }
 
   public async updateOffer(req: Request, res: Response): Promise<void> {
-    const updatedOffer = await this.offerService.updateById(req.params.offerId, req.body);
+    const updatedOffer = await this.offerService.updateById(
+      req.params.offerId,
+      req.body,
+    );
 
-    setIsFavoriteFlag([updatedOffer], await this.userService.getFavoriteIdsByUserId(req.user?.id));
+    setIsFavoriteFlag(
+      [updatedOffer],
+      await this.userService.getFavoriteIdsByUserId(req.user?.id),
+    );
     this.ok(res, fillDTO(OfferResponse, updatedOffer));
   }
 
@@ -146,26 +184,32 @@ export default class OfferController extends Controller {
   public async getOffer(req: Request, res: Response): Promise<void> {
     const offer = await this.offerService.findById(req.params.offerId);
 
-    setIsFavoriteFlag([offer], await this.userService.getFavoriteIdsByUserId(req.user?.id));
+    setIsFavoriteFlag(
+      [offer],
+      await this.userService.getFavoriteIdsByUserId(req.user?.id),
+    );
     this.ok(res, fillDTO(OfferResponse, offer));
   }
 
   public async getPremiumOffers(req: Request, res: Response): Promise<void> {
     const offers = await this.offerService.findIsPremiumByCity(req.params.city);
 
-    setIsFavoriteFlag(offers, await this.userService.getFavoriteIdsByUserId(req.user?.id));
+    setIsFavoriteFlag(
+      offers,
+      await this.userService.getFavoriteIdsByUserId(req.user?.id),
+    );
     this.ok(res, fillDTO(OfferResponse, offers));
   }
 
-  public async getComments(
-    { params }: Request,
-    res: Response
-  ): Promise<void> {
+  public async getComments({ params }: Request, res: Response): Promise<void> {
     const comments = await this.commentService.findByOfferId(params.offerId);
     this.ok(res, fillDTO(CommentResponse, comments));
   }
 
-  public async uploadPreviewImage(req: Request<core.ParamsDictionary | ParamsGetOffer>, res: Response) {
+  public async uploadPreviewImage(
+    req: Request<core.ParamsDictionary | ParamsGetOffer>,
+    res: Response,
+  ) {
     const { offerId } = req.params;
     const updateDto = { previewImage: req.file?.filename };
     await this.offerService.updateById(offerId, updateDto);

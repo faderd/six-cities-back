@@ -1,16 +1,19 @@
-import typegoose, { getModelForClass, defaultClasses } from '@typegoose/typegoose';
+import typegoose, {
+  getModelForClass,
+  defaultClasses,
+} from '@typegoose/typegoose';
 import { UserType } from '../../types/user-type.enum.js';
 import { User } from '../../types/user.type.js';
 import { createSHA256 } from '../../utils/common.js';
 
 const { prop, modelOptions } = typegoose;
 
-export interface UserEntity extends defaultClasses.Base { }
+export interface UserEntity extends defaultClasses.Base {}
 
 @modelOptions({
   schemaOptions: {
-    collection: 'users'
-  }
+    collection: 'users',
+  },
 })
 export class UserEntity extends defaultClasses.TimeStamps implements User {
   constructor(data: User) {

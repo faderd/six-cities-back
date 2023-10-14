@@ -18,12 +18,18 @@ export default class Application {
   constructor(
     @inject(Component.LoggerInterface) private logger: LoggerInterface,
     @inject(Component.ConfigInterface) private config: ConfigInterface,
-    @inject(Component.DatabaseInterface) private databaseClient: DatabaseService,
-    @inject(Component.ExceptionFilterInterface) private exceptionFilter: ExceptionFilterInterface,
-    @inject(Component.UserController) private userController: ControllerInterface,
-    @inject(Component.OfferController) private offerController: ControllerInterface,
-    @inject(Component.CommentController) private commentController: ControllerInterface,
-    @inject(Component.FavoriteController) private favoriteController: ControllerInterface,
+    @inject(Component.DatabaseInterface)
+    private databaseClient: DatabaseService,
+    @inject(Component.ExceptionFilterInterface)
+    private exceptionFilter: ExceptionFilterInterface,
+    @inject(Component.UserController)
+    private userController: ControllerInterface,
+    @inject(Component.OfferController)
+    private offerController: ControllerInterface,
+    @inject(Component.CommentController)
+    private commentController: ControllerInterface,
+    @inject(Component.FavoriteController)
+    private favoriteController: ControllerInterface,
   ) {
     this.expressApp = express();
   }
@@ -43,11 +49,15 @@ export default class Application {
     );
     this.expressApp.use(
       '/static',
-      express.static(this.config.get('STATIC_DIRECTORY_PATH'))
+      express.static(this.config.get('STATIC_DIRECTORY_PATH')),
     );
 
-    const authenticateMiddleware = new AuthenticateMiddleware(this.config.get('JWT_SECRET'));
-    this.expressApp.use(authenticateMiddleware.execute.bind(authenticateMiddleware));
+    const authenticateMiddleware = new AuthenticateMiddleware(
+      this.config.get('JWT_SECRET'),
+    );
+    this.expressApp.use(
+      authenticateMiddleware.execute.bind(authenticateMiddleware),
+    );
 
     this.expressApp.use(cors());
   }
@@ -74,6 +84,11 @@ export default class Application {
     this.registerRoutes();
     this.initExceptionFilters();
     this.expressApp.listen(this.config.get('PORT'));
-    this.logger.info(`Server started on ${getFullServerPath(this.config.get('HOST'), this.config.get('PORT'))}`);
+    this.logger.info(
+      `Server started on ${getFullServerPath(
+        this.config.get('HOST'),
+        this.config.get('PORT'),
+      )}`,
+    );
   }
 }
