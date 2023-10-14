@@ -21,6 +21,7 @@ export default class ExceptionFilter implements ExceptionFilterInterface {
     error: HttpError,
     _req: Request,
     res: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _next: NextFunction,
   ) {
     this.logger.error(
@@ -35,6 +36,7 @@ export default class ExceptionFilter implements ExceptionFilterInterface {
     error: Error,
     _req: Request,
     res: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _next: NextFunction,
   ) {
     this.logger.error(error.message);
@@ -47,6 +49,7 @@ export default class ExceptionFilter implements ExceptionFilterInterface {
     error: ValidationError,
     _req: Request,
     res: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _next: NextFunction,
   ) {
     this.logger.error(`[Validation Error]: ${error.message}`);
