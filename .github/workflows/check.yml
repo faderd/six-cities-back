@@ -8,7 +8,38 @@ on:
 
 name: Project check
 jobs:
+  # эта job займется созданием кэша
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: node:16-alpine
+    steps:
+      - uses: actions/checkout@v4
+      # Кеширование npm
+      - name: Cache dependencies
+        # включаем специальный action
+        uses: actions/cache@v3
+        # передаем параметры
+        with:
+          # что кешировать (путь)
+          path: ~/.npm
+          # ключ кеширования (хеш)
+          key: npm-${{ hashFiles('package-lock.json') }}
+          # ключ для восстановления кеша
+          restore-keys: npm-
+      # Установка зависимостей проекта
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+  # название job, на которое можно ссылаться из других мест,
+  # например, когда нам нужно указать, что две jobs
+  # работают последовательно:
+  # jobs:
+  #   build:
+  #   eslint:
+  #     needs: build
   lint:
+    needs: build
     name: ESLint
     runs-on: ubuntu-latest
     container:
@@ -17,9 +48,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          if [ -f 'package.json' ]; then npm install; else echo 'Skip. The file package.json does not exist'; fi
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
 
       - name: Run checks
         run: |
@@ -34,9 +68,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          if [ -f 'package.json' ]; then npm install; else echo 'Skip. The file package.json does not exist'; fi
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
 
       - name: Run checks
         run: |
