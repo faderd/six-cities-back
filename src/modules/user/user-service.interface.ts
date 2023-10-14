@@ -8,10 +8,25 @@ export interface UserServiceInterface {
   create(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>>;
   findByEmail(email: string): Promise<DocumentType<UserEntity> | null>;
   findById(id: string): Promise<DocumentType<UserEntity> | null>;
-  findOrCreate(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>>;
-  verifyUser(dto: LoginUserDto, salt: string): Promise<DocumentType<UserEntity> | null>;
-  addFavoriteOffer(offerId: string, userId: string): Promise<DocumentType<UserEntity> | null>;
-  removeFavoriteOffer(offerId: string, userId?: string,): Promise<DocumentType<UserEntity> | null>;
+  findOrCreate(
+    dto: CreateUserDto,
+    salt: string,
+  ): Promise<DocumentType<UserEntity>>;
+  verifyUser(
+    dto: LoginUserDto,
+    salt: string,
+  ): Promise<DocumentType<UserEntity> | null>;
+  addFavoriteOffer(
+    offerId: string,
+    userId: string,
+  ): Promise<DocumentType<UserEntity> | null>;
+  removeFavoriteOffer(
+    offerId: string,
+    userId?: string,
+  ): Promise<DocumentType<UserEntity> | null>;
   getFavoriteIdsByUserId(userId: string): Promise<string[] | null>;
-  updateById(userId: string, dto: UpdateUserDto): Promise<DocumentType<UserEntity> | null>;
+  updateById(
+    userId: string,
+    dto: UpdateUserDto,
+  ): Promise<DocumentType<UserEntity> | null>;
 }

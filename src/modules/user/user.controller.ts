@@ -25,13 +25,24 @@ export default class UserController extends Controller {
   constructor(
     @inject(Component.LoggerInterface) logger: LoggerInterface,
     @inject(Component.ConfigInterface) configService: ConfigInterface,
-    @inject(Component.UserServiceInterface) private readonly userService: UserServiceInterface,
+    @inject(Component.UserServiceInterface)
+    private readonly userService: UserServiceInterface,
   ) {
     super(logger, configService);
     this.logger.info('Register routes for UserController…');
 
-    this.addRoute({ path: '/register', method: HttpMethod.Post, handler: this.create, middlewares: [new ValidateDtoMiddleware(CreateUserDto)] });
-    this.addRoute({ path: '/login', method: HttpMethod.Post, handler: this.login, middlewares: [new ValidateDtoMiddleware(LoginUserDto)] });
+    this.addRoute({
+      path: '/register',
+      method: HttpMethod.Post,
+      handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateUserDto)],
+    });
+    this.addRoute({
+      path: '/login',
+      method: HttpMethod.Post,
+      handler: this.login,
+      middlewares: [new ValidateDtoMiddleware(LoginUserDto)],
+    });
     this.addRoute({
       path: '/:userId/avatar',
       method: HttpMethod.Post,
@@ -39,7 +50,10 @@ export default class UserController extends Controller {
       middlewares: [
         new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('userId'),
-        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'avatar'),
+        new UploadFileMiddleware(
+          this.configService.get('UPLOAD_DIRECTORY'),
+          'avatar',
+        ),
       ],
     });
     this.addRoute({
@@ -50,7 +64,9 @@ export default class UserController extends Controller {
   }
 
   public async create(
-    { body }: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>,
+    {
+      body,
+    }: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>,
     res: Response,
   ): Promise<void> {
     const existsUser = await this.userService.findByEmail(body.email);
@@ -59,23 +75,27 @@ export default class UserController extends Controller {
       throw new HttpError(
         StatusCodes.CONFLICT,
         `User with email «${body.email}» exists.`,
-        'UserController'
+        'UserController',
       );
     }
 
-    const result = await this.userService.create(body, this.configService.get('SALT'));
-    this.send(
-      res,
-      StatusCodes.CREATED,
-      fillDTO(UserResponse, result)
+    const result = await this.userService.create(
+      body,
+      this.configService.get('SALT'),
     );
+    this.send(res, StatusCodes.CREATED, fillDTO(UserResponse, result));
   }
 
   public async login(
-    { body }: Request<Record<string, unknown>, Record<string, unknown>, LoginUserDto>,
+    {
+      body,
+    }: Request<Record<string, unknown>, Record<string, unknown>, LoginUserDto>,
     res: Response,
   ): Promise<void> {
-    const user = await this.userService.verifyUser(body, this.configService.get('SALT'));
+    const user = await this.userService.verifyUser(
+      body,
+      this.configService.get('SALT'),
+    );
 
     if (!user) {
       throw new HttpError(
@@ -88,7 +108,7 @@ export default class UserController extends Controller {
     const token = await createJWT(
       JWT_ALGORITM,
       this.configService.get('JWT_SECRET'),
-      { email: user.email, id: user.id }
+      { email: user.email, id: user.id },
     );
 
     this.ok(res, {
@@ -109,7 +129,7 @@ export default class UserController extends Controller {
       throw new HttpError(
         StatusCodes.UNAUTHORIZED,
         'Unauthorized',
-        'UserController'
+        'UserController',
       );
     }
 

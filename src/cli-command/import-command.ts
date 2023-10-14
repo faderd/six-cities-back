@@ -31,15 +31,22 @@ export default class ImportCommand implements CliCommandInterface {
 
     this.logger = new ConsoleLoggerService();
     this.userService = new UserService(this.logger, UserModel);
-    this.offerService = new OfferService(this.logger, OfferModel, this.userService);
+    this.offerService = new OfferService(
+      this.logger,
+      OfferModel,
+      this.userService,
+    );
     this.databaseService = new DatabaseService(this.logger);
   }
 
   private async saveOffer(offer: Offer) {
-    const user = await this.userService.findOrCreate({
-      ...offer.user,
-      password: DEFAULT_USER_PASSWORD,
-    }, this.salt);
+    const user = await this.userService.findOrCreate(
+      {
+        ...offer.user,
+        password: DEFAULT_USER_PASSWORD,
+      },
+      this.salt,
+    );
 
     await this.offerService.create({
       ...offer,
@@ -58,7 +65,14 @@ export default class ImportCommand implements CliCommandInterface {
     this.databaseService.disconnect();
   }
 
-  public async execute(filename: string, login: string, password: string, host: string, dbname: string, salt: string): Promise<void> {
+  public async execute(
+    filename: string,
+    login: string,
+    password: string,
+    host: string,
+    dbname: string,
+    salt: string,
+  ): Promise<void> {
     const uri = getURI(login, password, host, DEFAULT_DB_PORT, dbname);
     this.salt = salt;
 

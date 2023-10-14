@@ -22,8 +22,4 @@ export const DEFAULT_STATIC_IMAGES = [
   'hotels/20.jpg',
 ];
 
-export const STATIC_RESOURCE_FIELDS = [
-  'avatarPath',
-  'previewImage',
-  'images',
-];
+export const STATIC_RESOURCE_FIELDS = ['avatarPath', 'previewImage', 'images'];

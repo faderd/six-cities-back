@@ -1,5 +1,16 @@
-import typegoose, { defaultClasses, getModelForClass, Ref } from '@typegoose/typegoose';
-import { MAX_ADULTS, MAX_ROOMS, OfferDescriptionLengthRange, OfferTitleLengthRange, PriceRange, RatingRange } from '../../const.js';
+import typegoose, {
+  defaultClasses,
+  getModelForClass,
+  Ref,
+} from '@typegoose/typegoose';
+import {
+  MAX_ADULTS,
+  MAX_ROOMS,
+  OfferDescriptionLengthRange,
+  OfferTitleLengthRange,
+  PriceRange,
+  RatingRange,
+} from '../../const.js';
 import { City, Location } from '../../types/city.type.js';
 import { OfferGood } from '../../types/offer-good.enum.js';
 import { TypeOfHousing } from '../../types/type-of-housing.enum.js';
@@ -7,12 +18,12 @@ import { UserEntity } from '../user/user.entity.js';
 
 const { prop, modelOptions } = typegoose;
 
-export interface OfferEntity extends defaultClasses.Base { }
+export interface OfferEntity extends defaultClasses.Base {}
 
 @modelOptions({
   schemaOptions: {
-    collection: 'offers'
-  }
+    collection: 'offers',
+  },
 })
 export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({

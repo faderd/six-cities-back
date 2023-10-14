@@ -12,37 +12,68 @@ import ValidationError from './validation-error.js';
 @injectable()
 export default class ExceptionFilter implements ExceptionFilterInterface {
   constructor(
-    @inject(Component.LoggerInterface) private logger: LoggerInterface
+    @inject(Component.LoggerInterface) private logger: LoggerInterface,
   ) {
     this.logger.info('Register ExceptionFilter');
   }
 
-  private handleHttpError(error: HttpError, _req: Request, res: Response, _next: NextFunction) {
-    this.logger.error(`[${error.detail}]: ${error.httpStatusCode} — ${error.message}`);
+  private handleHttpError(
+    error: HttpError,
+    _req: Request,
+    res: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _next: NextFunction,
+  ) {
+    this.logger.error(
+      `[${error.detail}]: ${error.httpStatusCode} — ${error.message}`,
+    );
     res
       .status(error.httpStatusCode)
       .json(createErrorObject(ServiceError.CommonError, error.message));
   }
 
-  private handleOtherError(error: Error, _req: Request, res: Response, _next: NextFunction) {
+  private handleOtherError(
+    error: Error,
+    _req: Request,
+    res: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _next: NextFunction,
+  ) {
     this.logger.error(error.message);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json(createErrorObject(ServiceError.ServiceError, error.message));
   }
 
-  private handleValidationError(error: ValidationError, _req: Request, res: Response, _next: NextFunction) {
+  private handleValidationError(
+    error: ValidationError,
+    _req: Request,
+    res: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _next: NextFunction,
+  ) {
     this.logger.error(`[Validation Error]: ${error.message}`);
-    error.details.forEach(
-      (errorField) => this.logger.error(`[${errorField.property}] — ${errorField.message}`)
+    error.details.forEach((errorField) =>
+      this.logger.error(`[${errorField.property}] — ${errorField.message}`),
     );
 
     res
       .status(StatusCodes.BAD_REQUEST)
-      .json(createErrorObject(ServiceError.ValidationError, error.message, error.details));
+      .json(
+        createErrorObject(
+          ServiceError.ValidationError,
+          error.message,
+          error.details,
+        ),
+      );
   }
 
-  public catch(error: Error | HttpError | ValidationError, req: Request, res: Response, next: NextFunction): void {
+  public catch(
+    error: Error | HttpError | ValidationError,
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): void {
     if (error instanceof HttpError) {
       return this.handleHttpError(error, req, res, next);
     } else if (error instanceof ValidationError) {

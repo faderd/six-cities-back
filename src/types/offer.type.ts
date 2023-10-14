@@ -21,5 +21,4 @@ export type Offer = {
   user: User;
   commentsCount: number;
   location: Location;
-}
-
+};

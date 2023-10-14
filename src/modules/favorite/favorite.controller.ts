@@ -18,16 +18,25 @@ export default class FavoriteController extends Controller {
     @inject(Component.LoggerInterface) logger: LoggerInterface,
     @inject(Component.ConfigInterface) configService: ConfigInterface,
 
-    @inject(Component.OfferServiceInterface) private readonly offerService: OfferServiceInterface,
-    @inject(Component.UserServiceInterface) private readonly userService: UserServiceInterface,
+    @inject(Component.OfferServiceInterface)
+    private readonly offerService: OfferServiceInterface,
+    @inject(Component.UserServiceInterface)
+    private readonly userService: UserServiceInterface,
 
     private privateRouteMiddleware = new PrivateRouteMiddleware(),
-    private validateOfferIdMiddleware = new ValidateObjectIdMiddleware('offerId'),
+    private validateOfferIdMiddleware = new ValidateObjectIdMiddleware(
+      'offerId',
+    ),
   ) {
     super(logger, configService);
     this.logger.info('Register routes for FavoriteController…');
 
-    this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.getFavoriteOffers, middlewares: [this.privateRouteMiddleware] });
+    this.addRoute({
+      path: '/',
+      method: HttpMethod.Get,
+      handler: this.getFavoriteOffers,
+      middlewares: [this.privateRouteMiddleware],
+    });
 
     this.addRoute({
       path: '/:offerId/:status',
@@ -43,14 +52,24 @@ export default class FavoriteController extends Controller {
   public async getFavoriteOffers(req: Request, res: Response): Promise<void> {
     const offers = await this.offerService.findIsFavoriteByUserId(req.user.id);
 
-    setIsFavoriteFlag(offers, await this.userService.getFavoriteIdsByUserId(req.user?.id));
+    setIsFavoriteFlag(
+      offers,
+      await this.userService.getFavoriteIdsByUserId(req.user?.id),
+    );
     this.ok(res, fillDTO(OfferResponse, offers));
   }
 
   public async toggleFavoriteOffer(req: Request, res: Response): Promise<void> {
-    const offer = await this.offerService.toggleIsFavoriteById(req.params.offerId, +req.params.status, req.user.id);
+    const offer = await this.offerService.toggleIsFavoriteById(
+      req.params.offerId,
+      +req.params.status,
+      req.user.id,
+    );
 
-    setIsFavoriteFlag([offer], await this.userService.getFavoriteIdsByUserId(req.user?.id));
+    setIsFavoriteFlag(
+      [offer],
+      await this.userService.getFavoriteIdsByUserId(req.user?.id),
+    );
     this.ok(res, fillDTO(OfferResponse, offer));
   }
 }

@@ -5,7 +5,9 @@ export default class VersionCommand implements CliCommandInterface {
   public readonly name = '--version';
 
   private readVersion(): string {
-    const contentPageJSON = readFileSync('./package.json', { encoding: 'utf8' });
+    const contentPageJSON = readFileSync('./package.json', {
+      encoding: 'utf8',
+    });
     const content = JSON.parse(contentPageJSON);
     return content.version;
   }

@@ -27,30 +27,34 @@ export abstract class Controller implements ControllerInterface {
 
   public addRoute(route: RouteInterface) {
     const routeHandler = asyncHandler(route.handler.bind(this));
-    const middlewares = route.middlewares?.map(
-      (middleware) => asyncHandler(middleware.execute.bind(middleware))
+    const middlewares = route.middlewares?.map((middleware) =>
+      asyncHandler(middleware.execute.bind(middleware)),
     );
-    const allHandlers = middlewares ? [...middlewares, routeHandler] : routeHandler;
+    const allHandlers = middlewares
+      ? [...middlewares, routeHandler]
+      : routeHandler;
     this._router[route.method](route.path, allHandlers);
-    this.logger.info(`Route registered: ${route.method.toUpperCase()} ${route.path}`);
+    this.logger.info(
+      `Route registered: ${route.method.toUpperCase()} ${route.path}`,
+    );
   }
 
   protected addStaticPath(data: UnknownObject): void {
-    const fullServerPath = getFullServerPath(this.configService.get('HOST'), this.configService.get('PORT'));
+    const fullServerPath = getFullServerPath(
+      this.configService.get('HOST'),
+      this.configService.get('PORT'),
+    );
     transformObject(
       STATIC_RESOURCE_FIELDS,
       `${fullServerPath}/${this.configService.get('STATIC_DIRECTORY_PATH')}`,
       `${fullServerPath}/${this.configService.get('UPLOAD_DIRECTORY')}`,
-      data
+      data,
     );
   }
 
   public send<T>(res: Response, statusCode: number, data: T): void {
     this.addStaticPath(data as UnknownObject);
-    res
-      .type('application/json')
-      .status(statusCode)
-      .json(data);
+    res.type('application/json').status(statusCode).json(data);
   }
 
   public created<T>(res: Response, data: T): void {
