@@ -17,7 +17,7 @@ export default class ConfigService implements ConfigInterface {
     const parseOutput = config();
 
     if (parseOutput.error) {
-      throw new Error("Can't read .env file. Perhaps the file does not exist.");
+      throw new Error('Can\'t read .env file. Perhaps the file does not exist.');
     }
 
     configSchema.load({});
