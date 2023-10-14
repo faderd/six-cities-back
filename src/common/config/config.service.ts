@@ -17,6 +17,7 @@ export default class ConfigService implements ConfigInterface {
     const parseOutput = config();
 
     if (parseOutput.error) {
+      // prettier-ignore
       throw new Error('Can\'t read .env file. Perhaps the file does not exist.');
     }
 
