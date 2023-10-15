@@ -15,7 +15,7 @@ jobs:
     container:
       image: node:16-alpine
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       # Кеширование npm
       - name: Cache dependencies
         # включаем специальный action
@@ -46,7 +46,7 @@ jobs:
       image: node:16-alpine
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -60,13 +60,14 @@ jobs:
           if [ -f 'package.json' ]; then npm run lint; else echo 'Skip. The file package.json does not exist'; fi
 
   prettier:
+    needs: build
     name: Prettier
     runs-on: ubuntu-latest
     container:
       image: node:16-alpine
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Cache dependencies
         uses: actions/cache@v3
