@@ -56,7 +56,7 @@ jobs:
           restore-keys: npm-
 
       - name: Run checks
-        run: npx run lint
+        run: npm run lint
 
   prettier:
     needs: build
