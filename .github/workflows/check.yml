@@ -15,7 +15,7 @@ jobs:
     container:
       image: node:16
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # Кеширование npm
       - name: Cache dependencies
         # включаем специальный action
@@ -43,10 +43,10 @@ jobs:
     name: ESLint
     runs-on: ubuntu-latest
     container:
-      image: node:16-alpine
+      image: node:16
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -64,10 +64,10 @@ jobs:
     name: Prettier
     runs-on: ubuntu-latest
     container:
-      image: node:16-alpine
+      image: node:16
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache dependencies
         uses: actions/cache@v3
