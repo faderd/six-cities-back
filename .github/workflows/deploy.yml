@@ -23,12 +23,12 @@ jobs:
         run: npm run build
         # env:
           # REACT_APP_BACKEND_URL: ${{ secrets.API_URL }}
-      - run: mkdir -p build
+      # - run: mkdir -p build
       - name: Archive build
         uses: actions/upload-artifact@v3
         with:
           name: build
-          path: build
+          path: six-cities-back/
 
   deploy:
     needs: build
@@ -41,7 +41,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: build
+          path: six-cities-back/
       - name: Copy build to the server
         uses: appleboy/scp-action@v0.1.4
         with:
