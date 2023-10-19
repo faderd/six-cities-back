@@ -33,6 +33,8 @@ jobs:
     needs: build
     runs-on: ununtu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
       # загружаем ранее сохраненные артефакты
       - name: Download a single artifact
         uses: actions/download-artifact@v3
@@ -40,7 +42,7 @@ jobs:
           name: build
           path: build
       - name: Copy build to the server
-        uses: appleboy/scp-action@v0.1.1
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
