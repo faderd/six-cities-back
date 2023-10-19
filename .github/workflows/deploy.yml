@@ -26,8 +26,8 @@ jobs:
       - name: Archive build
         uses: actions/upload-artifact@v3
         with:
-          name: build
-          path: ./six-cities-back/
+          name: dist
+          path: dist
 
   deploy:
     needs: build
@@ -39,8 +39,8 @@ jobs:
       - name: Download a single artifact
         uses: actions/download-artifact@v3
         with:
-          name: build
-          path: ./six-cities-back/
+          name: dist
+          path: dist
       - name: Copy build to the server
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           rm: true
-          source: build/*
+          source: dist/*
           target: '~/six-cities/public'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
