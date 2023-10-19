@@ -27,11 +27,12 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist
+          # указываем название папки, куда собирается наш проект
           path: dist
 
   deploy:
     needs: build
-    runs-on: ununtu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v4
