@@ -23,6 +23,7 @@ jobs:
         run: npm run build
         # env:
           # REACT_APP_BACKEND_URL: ${{ secrets.API_URL }}
+      - run: mkdir -p build
       - name: Archive build
         uses: actions/upload-artifact@v3
         with:
