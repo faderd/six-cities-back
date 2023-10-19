@@ -13,11 +13,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: node:16
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
       - run: npm install
       - name: Build
         run: npm run build
@@ -28,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build
-          path: six-cities-back/
+          path: ./six-cities-back/
 
   deploy:
     needs: build
@@ -41,7 +40,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: six-cities-back/
+          path: ./six-cities-back/
       - name: Copy build to the server
         uses: appleboy/scp-action@v0.1.4
         with:
