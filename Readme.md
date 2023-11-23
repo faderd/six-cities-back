@@ -1,9 +1,3 @@
-# Личный проект «Шесть городов»
-
-* Студент: [Andrey Sviridyuk](https://up.htmlacademy.ru/nodejs-api/2/user/597285).
-* Наставник: [Олег Зубов](https://htmlacademy.ru/profile/id42701).
-
-
 # Информация по проекту
 
 ## Переменные окружения
